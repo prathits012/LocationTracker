@@ -5,11 +5,12 @@ const usersMap = props => {
     var userLocationMarker = null;
     if(props.userLocation)
     {
-        userLocationMarker = <MapView.Marker coordinate = {props.userLocation}/>;
+        userLocationMarker = <MapView.Marker title = 'My Current Location' 
+        coordinate = {props.userLocation}/>;
     }
 
     const usersMarkers = props.usersPlaces.map(userPlace => 
-    (<MapView.Marker coordinate = { userPlace} key = {userPlace.id}/>) );
+    (<MapView.Marker title = {userPlace.user } coordinate = { userPlace} key = {userPlace.id}/>) );
     return (
         
 

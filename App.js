@@ -16,7 +16,8 @@ import {
   StatusBar,
   Button,
   Navigator, 
-  TouchableHighlight
+  TouchableHighlight,
+  TextInput
 } from 'react-native';
 
 import {
@@ -37,7 +38,7 @@ import Geolocation from '@react-native-community/geolocation';
 
 
 
-
+let userName = "defaultPranav";
 
 //const App: () => React$Node = () => {
 class HomeScreen extends React.Component {
@@ -80,7 +81,8 @@ getUserLocationHandler = () =>
         placesArray.push({
           latitude: parsedRes[key].latitude,
           longitude: parsedRes[key].longitude,
-          id: key
+          id: key,
+          user: userName
 
         });
       }
@@ -109,7 +111,7 @@ getUserLocationHandler = () =>
           title="Go to Settings"
           onPress={() => this.props.navigation.navigate('Settings')}
           />
-        <Text>ABC</Text>
+      
         </View>
       </SafeAreaView>
     </>
@@ -121,7 +123,11 @@ class SettingsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Settings Screen</Text>
+        <Text>Change Username</Text>
+        <TextInput placeholder = {'Enter a Username'} onChangeText =
+        {
+          (text) => {userName = text;}
+        }/>
       </View>
     );
   }
