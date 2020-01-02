@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React from 'react';
+import React , {Component, PropTypes} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,6 +15,8 @@ import {
   Text,
   StatusBar,
   Button,
+  Navigator, 
+  TouchableHighlight
 } from 'react-native';
 
 import {
@@ -24,15 +26,21 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
+import 'react-native-gesture-handler'
 import FetchLocation from './components/FetchLocation';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 //import getUserLocationHandler from './components/GetUserLocationHandler';
 import UsersMap from './components/UsersMap';
 import Geolocation from '@react-native-community/geolocation';
-import AppNavigator from './navigation/AppNavigator';
+
+
+
+
+
 
 //const App: () => React$Node = () => {
-class App extends React.Component {
+class HomeScreen extends React.Component {
   state =  { 
     userLocation: null,
     usersPlaces:[]
@@ -84,6 +92,7 @@ getUserLocationHandler = () =>
 
   }
   render(){
+    //const {navigate} = this.props.navigation;
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -96,13 +105,36 @@ getUserLocationHandler = () =>
           <FetchLocation onGetLocation = {this.getUserLocationHandler}/>
           <UsersMap userLocation={this.state.userLocation} 
           usersPlaces = {this.state.usersPlaces}/>
-          <AppNavigator/>
+          <Button
+          title="Go to Settings"
+          onPress={() => this.props.navigation.navigate('Settings')}
+          />
+        <Text>ABC</Text>
         </View>
       </SafeAreaView>
     </>
   );
 };
 }
+
+class SettingsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Settings Screen</Text>
+      </View>
+    );
+  }
+}
+
+
+const MainNavigator = createStackNavigator({
+  Home: HomeScreen,
+  Settings: SettingsScreen,
+});
+
+const App = createAppContainer(MainNavigator);
+
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
@@ -141,5 +173,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
 
 export default App;
