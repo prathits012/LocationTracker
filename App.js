@@ -29,7 +29,7 @@ import FetchLocation from './components/FetchLocation';
 //import getUserLocationHandler from './components/GetUserLocationHandler';
 import UsersMap from './components/UsersMap';
 import Geolocation from '@react-native-community/geolocation';
-
+import AppNavigator from './navigation/AppNavigator';
 
 //const App: () => React$Node = () => {
 class App extends React.Component {
@@ -96,6 +96,7 @@ getUserLocationHandler = () =>
           <FetchLocation onGetLocation = {this.getUserLocationHandler}/>
           <UsersMap userLocation={this.state.userLocation} 
           usersPlaces = {this.state.usersPlaces}/>
+          <AppNavigator/>
         </View>
       </SafeAreaView>
     </>
