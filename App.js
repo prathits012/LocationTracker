@@ -63,6 +63,7 @@ getUserLocationHandler = () =>
       body: JSON.stringify({
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
+        user: userName
       })
     })
     .then(res => console.log(res))
@@ -82,7 +83,7 @@ getUserLocationHandler = () =>
           latitude: parsedRes[key].latitude,
           longitude: parsedRes[key].longitude,
           id: key,
-          user: userName
+          user: parsedRes[key].user
 
         });
       }
@@ -123,7 +124,9 @@ class SettingsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Change Username</Text>
+        <Text textAlignVertical={'top'}>Change Username</Text>
+    <Text textAlignVertical={'top'}>Your Current Username is {userName}</Text>
+    <Text>Reload Settings to see changes</Text>
         <TextInput placeholder = {'Enter a Username'} onChangeText =
         {
           (text) => {userName = text;}
