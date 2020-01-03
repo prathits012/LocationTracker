@@ -11,7 +11,7 @@ const usersMap = props => {
 
     const usersMarkers = props.usersPlaces.map(userPlace => 
     (<MapView.Marker title = {userPlace.user } coordinate = { userPlace} key = {userPlace.id}
-                    description = {'Location was last updated '+ ( Math.floor((+ new Date()) - userPlace.timestamp)/60000) + 'minutes ago'}/>) );
+                    description = {'Location was last updated '+ ( Math.round(((+ new Date()) - userPlace.timestamp)/60000)) + ' minutes ago'}/>) );
     return (
         
 

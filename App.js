@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React , {Component, PropTypes} from 'react';
 import {
   SafeAreaView,
@@ -27,139 +19,26 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import 'react-native-gesture-handler'
+import 'react-native-gesture-handler';
 import FetchLocation from './components/FetchLocation';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-//import getUserLocationHandler from './components/GetUserLocationHandler';
+
 import UsersMap from './components/UsersMap';
+import SettingsScreen from './components/SettingsScreen';
+import MapScreen from './components/MapScreen';
+import FrontScreen from './components/FrontScreen'
 import Geolocation from '@react-native-community/geolocation';
 
 
 
 
-let userName = "defaultPranav";
+//export let userName = "defaultPranav";
 let timesNameChanged = 0;
 
 //const App: () => React$Node = () => {
-class MapScreen extends React.Component {
-  state =  { 
-    userLocation: null,
-    usersPlaces:[]
-    //userName: 'defaultPranav'
-  };
-
-getUserLocationHandler = () => 
-{
-  Geolocation.getCurrentPosition(position => {
-    this.setState({
-      userLocation: {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
-      }
-      
-    });
-    fetch('https://newapp-263800.firebaseio.com/places.json',{
-      method: 'POST',
-      body: JSON.stringify({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        user: userName,
-        timestamp:   + new Date()
-
-      })
-    })
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-
-  }, err => console.log(err));
-}
-  getUserPlacesHandler = () =>{
-    fetch('https://newapp-263800.firebaseio.com/places.json')
-    
-    .then(res => res.json())
-    .then(parsedRes => {
-      const placesArray = [];
-      for (const key in parsedRes)
-      {
-        placesArray.push({
-          latitude: parsedRes[key].latitude,
-          longitude: parsedRes[key].longitude,
-          id: key,
-          user: parsedRes[key].user,
-          timestamp: parsedRes[key].timestamp
-        });
-      }
-      this.setState({
-        usersPlaces: placesArray
-      });
-    })
-    .catch(err => console.log(err));
-
-  }
-  render(){
-    //const {navigate} = this.props.navigation;
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <View>
-            <Text style={{marginTop: 20}} >Hello, {userName}</Text>
-            <View style = {{marginBottom: 20, marginTop: 20}}>
-              <Button title = "Get User Places" onPress=
-              {this.getUserPlacesHandler}/>
-            </View>
-            <FetchLocation onGetLocation = {this.getUserLocationHandler}/>
-            <UsersMap userLocation={this.state.userLocation} 
-              usersPlaces = {this.state.usersPlaces}/>
-            <Button
-              title="Go to Settings"
-              onPress={() => this.props.navigation.navigate('Settings')}
-          />
-      
-        </View>
-      </SafeAreaView>
-    </>
-  );
-};
-}
-
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text textAlignVertical={'top'}>Change Username</Text>
-    <Text textAlignVertical={'top'}>Your Current Username is {userName}</Text>
-    <Text>Reload Settings to see changes</Text>
-        <TextInput placeholder = {'Enter a Username'} onChangeText =
-        {
-          (text) => {userName = text;}
-        }/>
-      </View>
-    );
-  }
-}
 
 
-class FrontScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text textAlignVertical={'top'}>Welcome Home!</Text>
-        <Button
-          title="Map View"
-          onPress={() => this.props.navigation.navigate('View Map')}
-        />
-        <Button
-          title="Settings"
-          onPress={() => this.props.navigation.navigate('Settings')}
-        />
-      </View>
-    );
-  }
-}
 
 
 const MainNavigator = createStackNavigator({
