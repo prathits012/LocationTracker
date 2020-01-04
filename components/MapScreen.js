@@ -13,7 +13,7 @@ import FetchLocation from './FetchLocation';
 import UsersMap from './UsersMap';
 import Geolocation from '@react-native-community/geolocation';
 
-import {userName} from './SettingsScreen';
+import {userName, userNameSet} from './SettingsScreen';
 export default class MapScreen extends React.Component {
     state =  { 
       userLocation: null,
@@ -49,27 +49,37 @@ export default class MapScreen extends React.Component {
     }, err => console.log(err));
   }
     getUserPlacesHandler = () =>{
-      fetch('https://newapp-263800.firebaseio.com/places.json')
-      
-      .then(res => res.json())
-      .then(parsedRes => {
-        const placesArray = [];
-        for (const key in parsedRes)
-        {
-          placesArray.push({
-            latitude: parsedRes[key].latitude,
-            longitude: parsedRes[key].longitude,
-            id: key,
-            user: parsedRes[key].user,
-            timestamp: parsedRes[key].timestamp
+ 
+        fetch('https://newapp-263800.firebaseio.com/places.json')
+        .then(res => res.json())
+        .then(parsedRes => {
+          const placesArray = [];
+          for (const key in parsedRes)
+          {
+            console.log('printing the key')
+            console.log(key);
+            console.log('printing the user from fetch')
+            console.log(parsedRes[key].user);
+            if(userNameSet.has(key)==true)  
+              {
+              placesArray.push({
+                latitude: parsedRes[key].latitude,
+                longitude: parsedRes[key].longitude,
+                id: key,
+                user: parsedRes[key].user,
+                timestamp: parsedRes[key].timestamp
+              });
+              }
+          }
+          this.setState({
+            usersPlaces: placesArray
           });
-        }
-        this.setState({
-          usersPlaces: placesArray
-        });
-      })
+        })
+
       .catch(err => console.log(err));
-  
+      console.log('printing the state usersplaces')
+      console.log(this.state.usersPlaces);
+      
     }
     render(){
       //const {navigate} = this.props.navigation;
@@ -80,7 +90,7 @@ export default class MapScreen extends React.Component {
           <View>
               <Text style={{marginTop: 20}} >Hello, {userName}</Text>
               <View style = {{marginBottom: 20, marginTop: 20}}>
-                <Button title = "Get User Places" onPress=
+                <Button title = "Update Map" onPress=
                 {this.getUserPlacesHandler}/>
               </View>
               <FetchLocation onGetLocation = {this.getUserLocationHandler}/>

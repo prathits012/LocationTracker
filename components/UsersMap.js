@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapView from 'react-native-maps';
+let numKey = 501;
 const usersMap = props => {
     var userLocationMarker = null;
     if(props.userLocation)
@@ -8,10 +9,15 @@ const usersMap = props => {
         userLocationMarker = <MapView.Marker title = 'My Current Location' 
         coordinate = {props.userLocation}/>;
     }
-
-    const usersMarkers = props.usersPlaces.map(userPlace => 
-    (<MapView.Marker title = {userPlace.user } coordinate = { userPlace} key = {userPlace.id}
-                    description = {'Location was last updated '+ ( Math.round(((+ new Date()) - userPlace.timestamp)/60000)) + ' minutes ago'}/>) );
+    console.log('in usersmap');
+    console.log(props.usersPlaces);
+    console.log('in usersmapdone');
+    let usersMarkers = props.usersPlaces.map(userPlace => 
+    (<MapView.Marker 
+        title = {userPlace.user } coordinate = { userPlace} key = {numKey++}
+        description = {'Location was last updated '+ ( Math.round(((+ new Date()) 
+        - userPlace.timestamp)/60000)) + ' minutes ago'}/>) );
+    console.log(usersMarkers);
     return (
         
 
@@ -29,7 +35,7 @@ const usersMap = props => {
                 style = {styles.map}>
                 {userLocationMarker}
                 {usersMarkers}
-                </MapView>
+            </MapView>
         </View>
     );
 };
