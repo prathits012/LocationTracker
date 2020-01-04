@@ -33,8 +33,8 @@ export default class MapScreen extends React.Component {
         }
         
       });
-      fetch('https://newapp-263800.firebaseio.com/places.json',{
-        method: 'POST',
+      fetch('https://newapp-263800.firebaseio.com/places/'+userName +'/.json',{
+        method: 'PUT',
         body: JSON.stringify({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,

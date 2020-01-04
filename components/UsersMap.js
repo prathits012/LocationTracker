@@ -17,6 +17,8 @@ const usersMap = props => {
 
         <View style = {styles.mapContainer}>
             <MapView  
+                showsCompass={true}
+                shows
                 initialRegion={{
                     latitude: 37.78825,
                     longitude: -122.4324,
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
     mapContainer: 
     {
         width: '100%',
-        height: 200,
+        height: '70%',
         marginTop: 20
     },
     map: {
